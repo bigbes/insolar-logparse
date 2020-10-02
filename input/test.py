@@ -26,14 +26,14 @@ class TestReader(object):
                 parsed_line = json.loads(raw_line, object_pairs_hook=json_object_multiple_unique)
             except Exception as e:
                 if self.debug:
-                    print("failed to parse json [%s]: '%s'" % (str(e), raw_line), file=sys.stderr)
+                    print("failed to parse json [%s]: '%s'" % (str(e), raw_line.strip()), file=sys.stderr)
                 continue
 
             try:
                 test_line = parse_test_line(parsed_line)
             except Exception as e:
                 if self.debug:
-                    print("failed to disassemble log line [%s]: '%s'" % (str(e), raw_line), file=sys.stderr)
+                    print("failed to disassemble log line [%s]: '%s'" % (str(e), raw_line.strip()), file=sys.stderr)
                 continue
 
             return test_line

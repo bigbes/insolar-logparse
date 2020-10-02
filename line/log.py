@@ -32,7 +32,7 @@ class LogLine(object):
         line = copy.copy(line)
 
         self.node = line.pop('nodeid', "<empty>")
-        self.role = line.pop('role')
+        self.role = line.pop('role', None)
         self.message = line.pop('message').strip()
         self.timestamp_raw = line.pop('time')
         self.timestamp = isoparse(self.timestamp_raw)
@@ -59,8 +59,8 @@ class LogLine(object):
         self.pulse = pulse
 
         self.fields = line
-        del self.fields['writeDuration']
-        del self.fields['loginstance']
+        self.fields.pop('writeDuration', None)
+        self.fields.pop('loginstance', None)
 
 
 class NodeDefinition(object):

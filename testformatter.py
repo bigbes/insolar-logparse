@@ -28,6 +28,8 @@ def main() -> int:
         for out in run.output:
             print(out)
 
+    return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())

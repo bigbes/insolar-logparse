@@ -143,11 +143,14 @@ class Package(object):
         self.elapsed = 0
 
     def add_event(self, event: TestEvent):
-        if isinstance(event, TestFailEvent):
+        if isinstance(event, TestFailEvent) and event.test is None:
             self.status = Status.Fail
             self.elapsed = event.elapsed
-        elif isinstance(event, TestPassEvent) and event.test is not None:
+        elif isinstance(event, TestPassEvent) and event.test is None:
             self.status = Status.Pass
+            self.elapsed = event.elapsed
+        elif isinstance(event, TestSkipEvent) and event.test is None:
+            self.status = Status.Skip
             self.elapsed = event.elapsed
         elif isinstance(event, TestRunEvent):
             test = self.obtain_test(event.test, False)

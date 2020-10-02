@@ -66,24 +66,25 @@ class TestContinueEvent(TestCommonEvent):
 
 
 class TestPassEvent(TestCommonEvent):
-    test: str
+    test: typing.Optional[str]
     elapsed: float
 
     def __init__(self, inp: JSONObject):
         super(TestPassEvent, self).__init__(inp)
+        self.test = inp.pop("Test", None)
         self.elapsed = inp["Elapsed"]
-        self.test = inp["Test"]
 
         del inp["Elapsed"]
-        del inp["Test"]
         check_empty(inp)
 
 
 class TestFailEvent(TestCommonEvent):
+    test: typing.Optional[str]
     elapsed: float
 
     def __init__(self, inp: JSONObject):
         super(TestFailEvent, self).__init__(inp)
+        self.test = inp.pop("Test", None)
         self.elapsed = float(inp["Elapsed"])
 
         del inp["Elapsed"]
@@ -104,16 +105,15 @@ class TestOutputEvent(TestCommonEvent):
 
 
 class TestSkipEvent(TestCommonEvent):
-    test: str
+    test: typing.Optional[str]
     elapsed: float
 
     def __init__(self, inp: JSONObject):
         super(TestSkipEvent, self).__init__(inp)
+        self.test = inp.pop("Test", None)
         self.elapsed = inp["Elapsed"]
-        self.test = inp["Test"]
 
         del inp["Elapsed"]
-        del inp["Test"]
         check_empty(inp)
 
 

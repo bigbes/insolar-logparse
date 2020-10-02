@@ -14,7 +14,8 @@ except ImportError:
 
 
 class Aggregator(object):
-    def __input__(self):
+    def __init__(self, configuration: typing.Dict):
+        self.only_errors = configuration.get("only_errors", True)
 
 
 class Printer(object):
